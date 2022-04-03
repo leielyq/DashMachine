@@ -1,19 +1,29 @@
-name: DashMachine
+name: ci3
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+      - 'main'
 
 jobs:
-
-  build:
-
+  docker:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: dashmachine
-      run: docker build . --file Dockerfile --tag dashmachine:$(date +%s)
- 
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: user/app:latest
