@@ -6,7 +6,7 @@ on:
       - 'master'
 env:
   # 设置 docker 镜像名
-  IMAGE_NAME: DashMachine
+  IMAGE_NAME: dashmachine
 jobs:
   docker:
     runs-on: ubuntu-latest
