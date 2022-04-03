@@ -1,56 +1,29 @@
-name: Docker2
+name: ci
 
 on:
   push:
-    # 每次 push tag 时进行构建，不需要每次 push 都构建。使用通配符匹配每次 tag 的提交，记得 tag 名一定要以 v 开头
-    tags:
-      - v1
-
-env:
-  # 设置 docker 镜像名
-  IMAGE_NAME: dashmachine
+    branches:
+      - 'main'
 
 jobs:
-  # 运行测试，如果需要的话，将注释取消掉并且修改为自己需要的内容
-  # See also https://docs.docker.com/docker-hub/builds/automated-testing/
-  #  test:
-  #    runs-on: ubuntu-latest
-  #
-  #    steps:
-  #      - uses: actions/checkout@v2
-  #
-  #      - name: Run tests
-  #        run: |
-  #          if [ -f docker-compose.test.yml ]; then
-  #            docker-compose --file docker-compose.test.yml build
-  #            docker-compose --file docker-compose.test.yml run sut
-  #          else
-  #            docker build . --file Dockerfile
-  #          fi
-
-  # Push image to GitHub Packages.
-  # See also https://docs.docker.com/docker-hub/builds/
-  push:
-    # 如果需要在构建前进行测试的话需要取消下面的注释和上面对应的 test 动作的注释。
-    # needs: test
-
+  docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        # 构建镜像，指定镜像名
-      - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME
-        # 登录到 dockerhub，使用 GitHub secrets 传入账号密码，密码被加密存储在 GitHub 服务器，添加方法见下图。
-      - name: Log into registry
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u libra146 --password-stdin
-
-      - name: Push image
-        run: 
-          IMAGE_ID=libra146/$IMAGE_NAME
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          [ "$VERSION" == "master" ] && VERSION=latest
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: user/app:latest
