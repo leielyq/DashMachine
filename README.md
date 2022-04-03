@@ -58,7 +58,7 @@ Instructions are for linux.
 ```
 virtualenv --python=python3 DashMachineEnv
 cd DashMachineEnv && source bin/activate
-git clone https://github.com/rmountjoy92/DashMachine.git
+git clone https://github.com/leielyq/DashMachine.git
 cd DashMachine && pip install -r requirements.txt
 python3 run.py
 ```
