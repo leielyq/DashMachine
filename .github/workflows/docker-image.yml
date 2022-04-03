@@ -1,0 +1,23 @@
+name: DashMachine
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: DashMachine
+      run: docker build . --file Dockerfile --tag DashMachine:$(date +%s)
+      with:
+          name: leielyq/DashMachine
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+ 
