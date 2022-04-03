@@ -14,6 +14,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: DashMachine
-      run: docker build . --file Dockerfile --tag DashMachine:$(date +%s)
+    - name: dashmachine
+      run: docker build . --file Dockerfile --tag dashmachine:$(date +%s)
  
