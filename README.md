@@ -69,6 +69,7 @@ Then open a web browser and go to localhost:5000
 User: admin
 Password: admin
 ```
+leielyq
 
 ## Updating
 For python, use git. For docker, just pull the latest image and recreate the container.
