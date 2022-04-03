@@ -32,6 +32,7 @@ Want a feature added now? [Open a bounty](https://www.bountysource.com/teams/das
 ![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot4.png)
 
 *******
+v2
 *******
 ## Installation
 ### Docker
