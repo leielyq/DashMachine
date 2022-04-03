@@ -1,6 +1,7 @@
 # DashMachine
 ### Another web application bookmark dashboard, with fun features.
 ![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/dashmachine?style=social)
+ipv6
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/rmountjoy92/dashmachine)
 ![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/rmountjoy/dashmachine)
