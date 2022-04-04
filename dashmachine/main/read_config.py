@@ -156,9 +156,9 @@ def read_config():
             #端口转发
             check = config[section].get("forwardPort", 0)
             if check == 0:
-            app.url = config[section].get("url", None)
+                app.url = config[section].get("url", None)
             else:
-            app.url = check
+                app.url = check
             if app.type == "app" and not app.url:
                 return {"msg": f"Invalid Config: {section} does not contain url."}
 
