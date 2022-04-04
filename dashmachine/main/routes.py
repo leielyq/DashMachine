@@ -50,7 +50,8 @@ def response_minify(response):
 @main.route("/home", methods=["GET"])
 def home():
     settings = Settings.query.first()
-    server_name = get_domain_by_re(url_for('home', _external=True))
+    server_name = get_domain_by_re(
+        url_for('static', filename='css/index.css', _external=True))
     if not check_groups(settings.home_access_groups, current_user):
         return redirect(url_for("error_pages.unauthorized"))
     return render_template("main/home.html")
