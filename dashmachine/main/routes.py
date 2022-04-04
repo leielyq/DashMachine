@@ -71,7 +71,7 @@ def app_view(app_id):
     if re.match(r'^https?:/{2}\w.+$', url):
         print("合法url")
         return render_template(
-            "main/app-view.html", url=f"{app_db.prefix}{app_db.url}", title=app_db.name
+            "main/app-view.html", url=url, title=url
         )
     else:
         print("不合法url")
