@@ -74,9 +74,11 @@ def read_config():
                 "custom_app_title", "DashMachine"
             )
 
-            settings.sidebar_default = config["Settings"].get("sidebar_default", "open")
+            settings.sidebar_default = config["Settings"].get(
+                "sidebar_default", "open")
 
-            settings.tags_expanded = config["Settings"].get("tags_expanded", "True")
+            settings.tags_expanded = config["Settings"].get(
+                "tags_expanded", "True")
 
             db.session.add(settings)
             db.session.commit()
@@ -97,7 +99,8 @@ def read_config():
                 )
                 user.role = "admin"
                 config.set(section, "role", "admin")
-                config.write(open(os.path.join(user_data_folder, "config.ini"), "w"))
+                config.write(
+                    open(os.path.join(user_data_folder, "config.ini"), "w"))
             db.session.add(user)
             db.session.commit()
             new_password = config[section].get("password", None)
@@ -118,7 +121,8 @@ def read_config():
                 db.session.commit()
             config.set(section, "password", "")
             config.set(section, "confirm_password", "")
-            config.write(open(os.path.join(user_data_folder, "config.ini"), "w"))
+            config.write(
+                open(os.path.join(user_data_folder, "config.ini"), "w"))
 
         # Groups creation
         elif "roles" in config[section]:
@@ -153,7 +157,7 @@ def read_config():
             app.prefix = config[section].get("prefix", None)
             if app.type == "app" and not app.prefix:
                 return {"msg": f"Invalid Config: {section} does not contain prefix."}
-            #端口转发
+            # 端口转发
             check = config[section].get("forwardPort", 0)
             if check == 0:
                 app.url = config[section].get("url", None)
@@ -161,8 +165,6 @@ def read_config():
                 app.url = check
             if app.type == "app" and not app.url:
                 return {"msg": f"Invalid Config: {section} does not contain url."}
-
-            
 
             app.icon = config[section].get("icon", None)
 
@@ -208,7 +210,8 @@ def read_config():
 
             if "data_sources" in config[section]:
                 for config_ds in config[section]["data_sources"].split(","):
-                    db_ds = DataSources.query.filter_by(name=config_ds.strip()).first()
+                    db_ds = DataSources.query.filter_by(
+                        name=config_ds.strip()).first()
                     if db_ds:
                         app.data_sources.append(db_ds)
                         db.session.merge(app)
