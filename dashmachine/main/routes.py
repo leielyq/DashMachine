@@ -16,6 +16,7 @@ from dashmachine.user_system.models import User
 from dashmachine.settings_system.models import Settings
 from dashmachine.paths import cache_folder, user_data_folder
 from dashmachine import app, db
+from urllib.parse import urlparse
 
 
 main = Blueprint("main", __name__)
@@ -23,11 +24,13 @@ server_name = ""
 
 
 def get_domain_by_re(u):
-    d = re.search(r"(?<=http[s]://)[.\w-]*(:\d{,8})?((?=/)|(?!/))", u).group()
+    d = urlparse(u)
     return d
 # ------------------------------------------------------------------------------
 # intial routes and functions (before/after request)
 # ------------------------------------------------------------------------------
+
+
 @app.after_request
 def response_minify(response):
     """
@@ -70,12 +73,12 @@ def app_view(app_id):
         return render_template(
             "main/app-view.html", url=f"{uri}", title=app_db.name
         )
-   
 
 
 @main.route("/load_data_source", methods=["GET"])
 def load_data_source():
-    data_source = DataSources.query.filter_by(id=request.args.get("id")).first()
+    data_source = DataSources.query.filter_by(
+        id=request.args.get("id")).first()
     data = get_data_source(data_source)
     return data
 
