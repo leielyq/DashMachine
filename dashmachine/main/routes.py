@@ -61,15 +61,15 @@ def app_view(app_id):
     app_db = Apps.query.filter_by(id=app_id).first()
     uri = app_db.prefix + app_db.url
     try:
-    get_domain_by_re(uri)
-    return render_template(
-        "main/app-view.html", url=f"{app_db.prefix}{app_db.url}", title=app_db.name
-    )
+        get_domain_by_re(uri)
+        return render_template(
+            "main/app-view.html", url=f"{app_db.prefix}{app_db.url}", title=app_db.name
+        )
     except Exception as err:
          uri = app_db.prefix + server_name+":"+app_db.url
-     return render_template(
-        "main/app-view.html", url=f"{uri}", title=app_db.name
-    )
+        return render_template(
+            "main/app-view.html", url=f"{uri}", title=app_db.name
+        )
    
 
 
