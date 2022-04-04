@@ -75,7 +75,7 @@ def app_view(app_id):
         )
     else:
         print("不合法url")
-        url = app_db.prefix + server_name+":"+app_db.url
+        url = app_db.prefix + server_name+app_db.url
         return render_template(
             "main/app-view.html", url=url, title=app_db.name
         )
