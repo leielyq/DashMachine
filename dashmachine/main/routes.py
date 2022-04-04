@@ -63,16 +63,21 @@ def app_view(app_id):
     if not check_groups(settings.home_access_groups, current_user):
         return redirect(url_for("user_system.login"))
     app_db = Apps.query.filter_by(id=app_id).first()
-    uri = app_db.prefix + app_db.url
-    try:
-        get_domain_by_re(uri)
+
+    server_name = get_domain_by_re(
+        url_for('static', filename='css/index.css', _external=True)).netloc
+
+    url = app_db.prefix + app_db.url
+    if re.match(r'^https?:/{2}\w.+$', url):
+        print("合法url")
         return render_template(
             "main/app-view.html", url=f"{app_db.prefix}{app_db.url}", title=app_db.name
         )
-    except Exception as err:
-        uri = app_db.prefix + server_name+":"+app_db.url
+    else:
+        print("不合法url")
+        url = app_db.prefix + server_name+":"+app_db.url
         return render_template(
-            "main/app-view.html", url=f"{uri}", title=app_db.name
+            "main/app-view.html", url=url, title=app_db.name
         )
 
 
