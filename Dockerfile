@@ -16,4 +16,4 @@ COPY [ ".", "/dashmachine/" ]
 ENV PRODUCTION=true
 EXPOSE 80
 VOLUME /dashmachine/dashmachine/user_data
-CMD [ "gunicorn","-b", "[::]:80","wsgi:app" ]
+CMD [ "gunicorn","-b", "[::]:6767","wsgi:app" ]
