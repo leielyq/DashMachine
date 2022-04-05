@@ -70,18 +70,15 @@ def app_view(app_id):
     url = app_db.prefix + app_db.url
     if re.match(r'^https?:/{2}\w.+$', url):
         print("合法url")
-        return render_template(
-            "main/app-view.html", url=url, title=url
-        )
     else:
         print("不合法url")
         url = app_db.prefix + server_name+app_db.url
-        if(app_db.open_in != 'iframe'):
-            return redirect(url)
-        else:
-            return render_template(
-            "main/app-view.html", url=url, title=url
-            )
+    if(app_db.open_in != 'iframe'):
+        return redirect(url)
+    else:
+        return render_template(
+        "main/app-view.html", url=url, title=url
+        )    
         
 
 
