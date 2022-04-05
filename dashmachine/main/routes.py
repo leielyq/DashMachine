@@ -76,9 +76,13 @@ def app_view(app_id):
     else:
         print("不合法url")
         url = app_db.prefix + server_name+app_db.url
-        return render_template(
-            "main/app-view.html", url=url, title=app_db.name
-        )
+        if(app_db.open_in != 'iframe'):
+            return redirect(url)
+        else:
+            return render_template(
+            "main/app-view.html", url=url, title=url
+            )
+        
 
 
 @main.route("/load_data_source", methods=["GET"])

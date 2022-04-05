@@ -4,9 +4,9 @@
     {% if override == 'iframe' or app.open_in == 'iframe' and override == None %}
         <a href="{{ url_for('main.app_view', app_id=app.id) }}" class="app-a {{ classes }}" data-name="{{ app.name }}" data-description="{{ app.description }}" data-tags="{{ app.tags }}">
     {% elif override == 'this_tab' or app.open_in == 'this_tab' and override == None %}
-        <a href="{{ app.prefix }}{{server_name}}{{ app.url }}" class="app-a {{ classes }}" data-name="{{ app.name }}" data-description="{{ app.description }}" data-tags="{{ app.tags }}">
+        <a href="{{ url_for('main.app_view', app_id=app.id) }}" class="app-a {{ classes }}" data-name="{{ app.name }}" data-description="{{ app.description }}" data-tags="{{ app.tags }}">
     {% elif override == 'new_tab' or app.open_in == "new_tab" and override == None %}
-        <a href="{{ app.prefix }}{{server_name}}{{ app.url }}" target="_blank" class="app-a {{ classes }}" data-name="{{ app.name }}" data-description="{{ app.description }}" data-tags="{{ app.tags }}">
+        <a href="{{ url_for('main.app_view', app_id=app.id) }}" target="_blank" class="app-a {{ classes }}" data-name="{{ app.name }}" data-description="{{ app.description }}" data-tags="{{ app.tags }}">
     {% endif %}
 {% endmacro %}
 
