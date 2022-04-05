@@ -24,7 +24,7 @@ server_name = ""
 
 
 def get_domain_by_re(u):
-    d = urlparse(u)
+    d = urlparse(u).netloc.split(':')[0]
     return d
 # ------------------------------------------------------------------------------
 # intial routes and functions (before/after request)
@@ -65,7 +65,7 @@ def app_view(app_id):
     app_db = Apps.query.filter_by(id=app_id).first()
 
     server_name = get_domain_by_re(
-        url_for('static', filename='css/index.css', _external=True)).netloc
+        url_for('static', filename='css/index.css', _external=True))
 
     url = app_db.prefix + app_db.url
     if re.match(r'^https?:/{2}\w.+$', url):
