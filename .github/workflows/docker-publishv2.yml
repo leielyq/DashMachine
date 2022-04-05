@@ -27,12 +27,9 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           
       - uses: actions/checkout@v2
-        # 构建镜像，指定镜像名
-      - name: Build image
-        run: docker build . --file Dockerfile --tag dashmachine
 
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: leiel/dashmachine:latest
+          tags: leiel/dashmachine:$(date +%s)
