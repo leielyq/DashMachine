@@ -26,13 +26,16 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: leiel/dashmachine
+          
       - uses: actions/checkout@v2
-        # 构建镜像，指定镜像名
-      - name: Build image
-        run: docker build . --file Dockerfile --tag dashmachine
 
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: leiel/dashmachine:latest
+          tags: ${{ steps.meta.outputs.tags }}
